@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Todo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+<body class=" container-fluid col-5 mt-2">
+    <div class="create">
+        <h1>待辦事項</h1>
+        <div><span class="text-danger">*</span> 項目</div>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.item }}
+            <input type="submit" class="btn mb-1 btn-success" name="create item" value="送出">
+        </form>
+        <p class="text-danger" hidden>ERROR MSG</p>
+    </div>
+
+    <div class="row col-12 text-center mt-2">
+        <div class="col-6 border btn bg-light">待完成</div>
+        <div class="col-6 border btn">已完成</div>
+    </div>
+
+    {% for i in items %}
+        <div class="row col-12 mt-2">
+            <div class="col-2">{{ i.item }}</div>
+            <div class="col-2">{{ i.finished }}</div>
+            <div class="col-4">{{ i.finished_date }}</div>
+            <div class="col-2"><a href="/todo_v1/delete_item/{{ i.id }}">移除</a></div>
+            <div class="col-2"><a href="/todo_v1/finish_item/{{ i.id }}">完成</a></div>
+        </div>
+    {% empty %}
+        <h5>You have nothing todo.</h5>
+    {% endfor %}
+    <div id="overlay"></div>
+</body>
+<style>
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+    }
+</style>
+</html>

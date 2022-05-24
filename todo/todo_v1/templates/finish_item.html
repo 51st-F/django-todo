@@ -1,0 +1,9 @@
+<div id="overlay">
+    <p>Are you sure to finish "{{ item.item }}"?</p>
+    <a href="{% url 'list' %}">Cancel</a>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="submit" value="Finish">
+    </form>
+</div>
